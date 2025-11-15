@@ -28,6 +28,6 @@ El trabajo propone un nuevo marco para la Teoría de Números basado en la funci
 
 Este trabajo está registrado y disponible para citación inmediata:
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17619508.svg)](https://doi.org/10.5281/zenodo.17619508)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17620011.svg)](https://doi.org/10.5281/zenodo.17620011)
 
 Este repositorio está bajo la licencia **CC BY 4.0** (Creative Commons Attribution 4.0). Si utilizas este trabajo, por favor, cita la versión con DOI o el preprint de arXiv.
