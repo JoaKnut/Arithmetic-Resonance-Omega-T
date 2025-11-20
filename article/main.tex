@@ -836,23 +836,23 @@ Donde \(\mathcal{T}_p \approx 2.4101\dots\) es la Constante Armónica de los Pri
 
 Observamos empíricamente que el sistema converge a un régimen logarítmico. Sin embargo, el valor exacto de esta pendiente es el núcleo del problema.
 
-\begin{conjecture}[Hipótesis de la Pendiente Filtrada]
+\begin{conjecture}[Hipótesis de la Pendiente Espectral]
 \label{conj:pendiente}
-La tendencia asintótica del sismógrafo está determinada por la dimensión espectral menos la contribución del polo trivial de \(\zeta(s)\) en \(s=1\). Es decir:
+La tendencia asintótica media del sismógrafo está determinada unívocamente por la dimensión de equilibrio $\mathcal{K}_{MF}$. Es decir:
 \[
-\Psi_E(n) \sim C \cdot \log(n), \quad \text{con } C = \mathcal{K}_{MF} - 1.
+\Psi_E(n) \sim \mathcal{K}_{MF} \cdot \log(n).
 \]
 \end{conjecture}
 
 \begin{remark}
-La sustracción de la unidad (\(-1\)) es fundamental. Representa el filtrado de la ``densidad de fondo'' (la serie armónica). Si esta conjetura es cierta, implica que la ``tensión estructural pura'' del universo numérico es exactamente \(0.72864\dots\) unidades de resonancia por escala logarítmica.
+Esta identidad implica que $\mathcal{K}_{MF} \approx 1.72864\dots$ representa la ``impedancia característica'' total del universo numérico. A diferencia de enfoques que separan la densidad armónica de las fluctuaciones, el modelo sugiere que la Semilla Frecuencial integra ambas componentes en una única constante de acoplamiento. La dinámica de tensión no requiere factores de corrección aditivos; la energía del sistema escala directamente con la dimensión espectral derivada de la función Zeta.
 \end{remark}
 
 \subsection{El Error y la Reducción de la HR}
 
 Definimos la desviación del sistema respecto a su predicción teórica como:
 \[
-\mathcal{E}_{MF}(n) = \Psi_E(n) - (\mathcal{K}_{MF}-1)\log(n).
+\mathcal{E}_{MF}(n) = \Psi_E(n) - \mathcal{K}_{MF}\log(n).
 \]
 
 El paso final es establecer el puente lógico entre este artefacto dinámico y la teoría clásica.
@@ -870,7 +870,7 @@ Si asumimos la validez de la Conjetura \ref{conj:isomorfismo} (el isomorfismo), 
 \end{corollary}
 
 \begin{remark}
-Bajo este marco, la HR no es un problema de azar, sino un problema de \textbf{calibración}. Probar la HR equivale a demostrar que la constante de amortiguación efectiva del sistema es, rigurosa y exactamente, \(\mathcal{K}_{MF}-1\). Cualquier otro valor implicaría un desequilibrio energético que divergiría del comportamiento observado de los primos.
+Bajo este marco, la HR no es un problema de azar, sino un problema de \textbf{calibración}. Probar la HR equivale a demostrar que la constante de amortiguación efectiva del sistema es, rigurosa y exactamente, \(\mathcal{K}_{MF}\). Cualquier otro valor implicaría un desequilibrio energético que divergiría del comportamiento observado de los primos.
 \end{remark}
 
 % ============================================================
@@ -888,8 +888,8 @@ El Modelo Frecuencial de los Números (MFN) ha logrado traducir problemas profun
     \item \textbf{Rigidez Estadística de la Semilla:} 
     Validar que la secuencia determinista \(\Lambda_{MF}(n) \in \{-2, 1, 2\}\) se comporta pseudo-aleatoriamente en el límite asintótico. El núcleo del problema reside en demostrar que la semilla carece de correlaciones aritméticas de largo alcance. Si la autocorrelación de la semilla decae suficientemente rápido, la cota del término de error \(\mathcal{E}_{MF}\) (y por ende la HR) quedará probada.
     
-    \item \textbf{Certificación de la Pendiente \(C = \mathcal{K}_{MF} - 1\):}
-    Realizar un análisis asintótico fino sobre la serie generatriz \(L(s, \Lambda_{MF})\) para validar la Conjetura \ref{conj:pendiente}. Es imperativo demostrar analíticamente que la sustracción del polo trivial en \(s=1\) resulta exactamente en el coeficiente \(C_{MF} \approx 0.72864\), confirmando que este valor es el atractor universal del sistema y no una coincidencia numérica.
+    \item \textbf{Certificación de la Pendiente \(C = \mathcal{K}_{MF}\):}
+    Realizar un análisis asintótico fino sobre la serie generatriz \(L(s, \Lambda_{MF})\) para validar la Conjetura \ref{conj:pendiente}. Es imperativo demostrar analíticamente que el coeficiente \(C_{MF} \approx 1.72864\), es el atractor universal del sistema y no una coincidencia numérica.
     
     \item \textbf{Acotación Energética de Perfectos Impares:}
     Utilizar la convergencia de la función de resonancia \(T(n) \to 1\) para formalizar la noción de ``presupuesto de amortiguamiento''. Si se demuestra que la estructura multiplicativa de un Número Perfecto Impar (NPI) exige una resonancia residual que excede la Constante de Amortiguamiento Perfecto (\(C_{Perf}\)), se habrá probado la inexistencia de NPIs por reducción al absurdo energético.
