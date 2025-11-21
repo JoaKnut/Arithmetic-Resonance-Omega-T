@@ -18,12 +18,12 @@ def explicar_contexto():
       - Si n es primo:     Psi(n) = Psi(n-1) / Tp     [Relajación / Descarga]
       
     Hipótesis de Knuttzen: Psi(n) ~ (K_MF) * log(n)
-    Donde K_MF approx 1.72864 (Dimensión de Equilibrio).
+    Donde K_MF approx 1.5645  (Dimensión de Equilibrio).
     """)
 
 # Constantes del modelo
 TP_CONST = 2.410142264
-K_MF = 1.72864
+K_MF = 1.5645 
 PENDIENTE_TEORICA = K_MF
 
 def omega_fast(n):
