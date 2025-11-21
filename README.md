@@ -1,33 +1,45 @@
-# Marco de Resonancia Aritmética $\Omega(n)$ y $T(n)$
+# 🔱 Modelo Frecuencial de los Números (MFN) | v1.0.1
 
-Este repositorio contiene la teoría, el código de simulación y el código fuente LaTeX del artículo **"Resonancia Aritmética: Un marco unificado para la primalidad, la Conjetura ABC y la Hipótesis de Riemann"**.
-
-El trabajo propone un nuevo marco para la Teoría de Números basado en la función elemental $\Omega(n) = d(2n) − 4$, extendiéndolo a un modelo dinámico $\Psi_E(n)$ para estudiar el equilibrio estructural de los enteros.
-
----
-
-## Componentes del Proyecto
-
-### 1. Funciones de Resonancia
-
-* **$\Omega(n)$ (Tensión Armónica):** Caracteriza la primalidad ($\Omega(n) = 0$ si $n$ es primo o $n = 4$). Utilizada para proponer una nueva formulación de la **Conjetura ABC** (Sección 7).
-* **$T(n)$ (Resonancia de Fondo):** Una función iterada que revela constantes fundamentales, incluyendo $T(4) = e$, una constante $T_p$ para primos y la **Constante de Amortiguamiento Perfecto**, $C_{Perf} \approx 0.864$ .
-* **$\Psi_E(n)$ (Sismógrafo Dinámico):** Un modelo recursivo cuya desviación de su tendencia logarítmica es postulada como equivalente a la **Hipótesis de Riemann** (Sección 9).
-
-### 2. Estructura del Repositorio
-
-| Carpeta        | Contenido                                                           | Propósito                                                |
-|----------------|---------------------------------------------------------------------|-----------------------------------------------------------|
-| **`Article/`** | Código fuente en LaTeX (`.tex`) y la versión final en PDF.          | Contiene la prueba formal y las demostraciones.          |
-| **`Code/`**    | Scripts en Python utilizados para el cálculo de $T(n)$, $C_{Perf}$ y la simulación de $\Psi_E(n)$. | Permite la reproducibilidad de los resultados numéricos y gráficos. |
-| **`Figures/`** | Imágenes de las simulaciones y espectros utilizados en el artículo. | Resultados visuales generados por el código.             |
+[![Status](https://img.shields.io/badge/Status-Anal%C3%ADtico%20y%20Heur%C3%ADstico-blue)](https://github.com/Knuttzen/MFN)
+[![License](https://img.shields.io/badge/License-MIT-green)](LICENSE)
 
 ---
 
-## Citas y Estado del Preprint
+## 🧭 Overview del Proyecto
 
-Este trabajo está registrado y disponible para citación inmediata:
+El Modelo Frecuencial de los Números (MFN) es un marco teórico que establece un **isomorfismo analítico** entre la geometría de las subdivisiones de polígonos y la teoría de divisores, interpretando la distribución de los enteros no como una secuencia estática, sino como un sistema dinámico regido por la **resonancia**.
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17620011.svg)](https://doi.org/10.5281/zenodo.17620011)
+El proyecto se estructura en dos pilares:
+1.  **Fundamentos Analíticos (Parte I):** Deducción rigurosa de las identidades.
+2.  **Modelos Heurísticos (Parte II):** Aplicación de las identidades para simular problemas abiertos (Riemann, ABC).
 
-Este repositorio está bajo la licencia **CC BY 4.0** (Creative Commons Attribution 4.0). Si utilizas este trabajo, por favor, cita la versión con DOI o el preprint de arXiv.
+### 🔑 Resultados Analíticos Clave (Sección 6 & 9)
+
+| Concepto | Identidad Rigurosa | Interpretación |
+| :--- | :--- | :--- |
+| **Resonancia ($\Omega$)** | $\Omega(n) = d(2n) - 4$ | Cuantificación del exceso de divisores en el espacio $2n$. |
+| **Semilla ($\Lambda_{MF}$)** | $L(s) = (2 - 2^{-s})\zeta(s) - 4$ | La estructura elemental de $\Omega(n)$, determinada solo por la **paridad** de $n$. |
+| **Impedancia ($\mathcal{K}_{MF}$)** | $(2 - 2^{-\mathcal{K}_{MF}})\zeta(\mathcal{K}_{MF}) = 4$ | La **Constante de Equilibrio Espectral**. El exponente al que el sistema se mantiene en un estado de **no-divergencia**. |
+
+---
+
+## 🧮 Scripts de Simulación y Verificación
+
+Los scripts en este repositorio están diseñados para validar empíricamente los teoremas y las conjeturas del artículo, demostrando la **coherencia estructural** del modelo dinámico con los resultados analíticos.
+
+| ID | Script | Propósito y Rigor Científico |
+| :--- | :--- | :--- |
+| **01** | `01_criba_resonancia.py` | **Cálculo de $\pi(N)$ basado en la Semilla.** Implementa la fórmula de $\pi(N)$ utilizando la **Convolución de Dirichlet** de la semilla $\Lambda_{MF}$. Prueba la validez conceptual de la Semilla como base para un contador de primos. |
+| **02** | `02_espectro_t.py` | **Análisis del Espectro de Resonancia $T(n)$.** Valida la convergencia a las constantes fundamentales ($T(4) \to e$ y $T(p) \to \mathcal{T}_p$). Confirma que la función $T(n)$ es una medida precisa de la **entropía estructural** del entero. |
+| **03** | `03_sismografo.py` | **Simulación de la Dinámica Espectral.** Simula el proceso de carga/descarga $\Psi_E(n)$. Compara el camino dinámico con el **Atractor Teórico** $\mathcal{K}_{MF} \ln(n)$ para demostrar empíricamente la **regresión a la media** y el confinamiento del error. |
+| **04** | `04_contador_pi.py` | **Contador de Primos (Referencia).** Implementación del contador $\pi(N) = \lfloor \sum N^{-\Omega(n)} \rfloor$ (Sección 4). Útil como herramienta de referencia, aunque es computacionalmente ineficiente. |
+| **05** | `05_abc_tension.py` | **Simulador de Tensión en la Conjetura ABC.** Aplica la métrica de **Tensión Armónica Total** ($\Omega_{ABC}$) a las ternas, probando la conjetura heurística de que las ternas con alto contenido de potencias colapsan a estados de baja resonancia. |
+
+---
+
+## 🎯 Futuras Vías de Investigación (v1.1.0)
+
+La próxima *release* se enfocará en el rigor de la Parte II:
+
+* **Formalización del Error $\epsilon_{dyn}$:** Uso de los Teoremas de Perron y Tauberianos para acotar rigurosamente el término de error del Sismógrafo.
+* **Cuantificación de la Coherencia:** Análisis del **Acoplamiento Espectral** entre $\zeta(\mathcal{K}_{MF})$ y $T_p$ para investigar la cuasi-identidad ($\approx 99.8\%$).
