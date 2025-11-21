@@ -1,7 +1,4 @@
 # 🔱 Modelo Frecuencial de los Números (MFN) | v1.0.1
-
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17620011.svg)](https://doi.org/10.5281/zenodo.17620011)
-[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 [![Status](https://img.shields.io/badge/Status-Anal%C3%ADtico%20y%20Heur%C3%ADstico-blue)](https://github.com/Knuttzen/MFN)
 
 ---
@@ -41,9 +38,11 @@ Este repositorio incluye algoritmos diseñados para validar empíricamente los t
 ## 📄 Citación y Licencia
 
 Este trabajo está registrado y disponible para citación inmediata. Si utilizas las ecuaciones, el código o el marco teórico del MFN, por favor, **cita la versión con DOI**.
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17674007.svg)](https://doi.org/10.5281/zenodo.17674007)
 
 **Licencia:**
 Este repositorio y su contenido están bajo la licencia **CC BY 4.0** (Creative Commons Attribution 4.0).
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
 
 ---
 
