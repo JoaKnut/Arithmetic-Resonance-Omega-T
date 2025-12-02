@@ -8,7 +8,7 @@ def explicar_contexto():
     print("""
     ===========================================================================
     SCRIPT 1: LA CRIBA DE RESONANCIA (Sintetizador Aditivo MFN)
-    Referencia: Secciones 2, 3, 5 y 9 del paper de J. Knuttzen.
+    Referencia: Secciones 2, 3, 5 y 9 del paper.
     ===========================================================================
     
     Este script prueba la hipótesis de que la función Omega(n) puede construirse
