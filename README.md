@@ -1,4 +1,4 @@
-# 🔱 Modelo Frecuencial de los Números (MFN) | v1.0.1
+# 🔱 Modelo Frecuencial de los Números (MFN) | v1.0.0
 [![Status](https://img.shields.io/badge/Status-Anal%C3%ADtico%20y%20Heur%C3%ADstico-blue)](https://github.com/Knuttzen/MFN)
 
 ---
@@ -11,7 +11,7 @@ El proyecto se estructura epistemológicamente en dos pilares:
 1. **Fundamentos Analíticos (Parte I):** Deducción rigurosa de identidades y propiedades de series de Dirichlet.
 2. **Modelos Heurísticos (Parte II):** Aplicación de estas identidades para modelar problemas abiertos bajo una dinámica espectral.
 
-### 🔑 Resultados Analíticos Clave (v1.0.1)
+### 🔑 Resultados Analíticos Clave (v1.0.0)
 
 | Concepto | Identidad Rigurosa | Interpretación Física del Modelo |
 | :--- | :--- | :--- |
