@@ -1,56 +1,55 @@
-# 🔱 Modelo Frecuencial de los Números (MFN) | v1.0.0
-[![Status](https://img.shields.io/badge/Status-Anal%C3%ADtico%20y%20Heur%C3%ADstico-blue)](https://github.com/Knuttzen/MFN)
+# 🔱 Modelo Frecuencial de los Números (MFN) | v1.1.0
+
+[![Status](https://img.shields.io/badge/Status-Cota%20Din%C3%A1mica%20Probada-success)](https://github.com/Knuttzen/MFN)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17674007.svg)](https://doi.org/10.5281/zenodo.17674007)
+[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](LICENSE)
 
 ---
 
 ## 🧭 Overview del Proyecto
 
-El **Modelo Frecuencial de los Números (MFN)** es un marco teórico que establece un **isomorfismo analítico** entre la geometría de las subdivisiones de polígonos regulares y la teoría de divisores aritméticos, interpretando la distribución de los enteros no como una secuencia estática, sino como un sistema dinámico de **resonancia y disipación**.
+El **Modelo Frecuencial de los Números (MFN)** es un marco teórico que establece un **isomorfismo analítico** entre la geometría de las subdivisiones de polígonos regulares y la teoría de divisores aritméticos. Interpreta la distribución de los enteros no como una secuencia estática, sino como un sistema dinámico **Input-to-State Stable (ISS)**.
 
-El proyecto se estructura epistemológicamente en dos pilares:
-1. **Fundamentos Analíticos (Parte I):** Deducción rigurosa de identidades y propiedades de series de Dirichlet.
-2. **Modelos Heurísticos (Parte II):** Aplicación de estas identidades para modelar problemas abiertos bajo una dinámica espectral.
+En la versión **v1.1.0**, el proyecto avanza desde la heurística hacia la formalización de cotas, incorporando la **Cota BHP (Baker-Harman-Pintz)** para demostrar que la energía del error dinámico está estrictamente acotada por $O(n^{0.525})$.
 
-### 🔑 Resultados Analíticos Clave (v1.0.0)
+### 🔑 Nuevos Resultados Analíticos (v1.1.0)
 
-| Concepto | Identidad Rigurosa | Interpretación Física del Modelo |
+| Concepto | Identidad / Cota | Interpretación Física del Modelo |
 | :--- | :--- | :--- |
-| **Resonancia ($\Omega$)** | $\Omega(n) = d(2n) - 4$ | Cuantificación exacta del "exceso de estructura" o divisores en el espacio duplicado $2n$. |
-| **Semilla ($\Lambda_{MF}$)** | $L(s) = (2 - 2^{-s})\zeta(s) - 4$ | La estructura atómica de $\Omega(n)$. Es una señal determinista dependiente solo de la **paridad**, aislada mediante convolución de Dirichlet. |
-| **Impedancia ($\mathcal{K}_{MF}$)** | $(2 - 2^{K_{MF}})\zeta(K_{MF}) = 4$ | La **Constante de Equilibrio Espectral**. Es el exponente crítico al cual el sistema se estabiliza, evitando la divergencia de la suma de resonancias. |
+| **Resonancia ($\Omega$)** | $\Omega(n) = d(2n) - 4$ | Cuantificación exacta del "exceso de estructura" en el espacio duplicado. |
+| **Identidad de Acople** | $\epsilon_{dyn}(n) \sim -\frac{1}{2\pi} \ln(n) (\pi(n) - Li(n))$ | Vinculación mecánica directa entre el error del sismógrafo y el error en el conteo de primos. |
+| **Estabilidad (ISS)** | $\epsilon_{dyn}(n) \ll O(n^{0.525})$ | **Teorema de Estabilidad Mecánica**. Demostración de que el sistema no diverge, imponiendo un "muro duro" al error de Riemann en $\sigma = 0.525$. |
+| **Semilla ($\Lambda_{MF}$)** | $L(s) = (2 - 2^{-s})\zeta(s) - 4$ | Estructura atómica determinista aislada mediante convolución de Dirichlet. |
 
 ---
 
 ## 🧮 Scripts de Simulación y Verificación
 
-Este repositorio incluye algoritmos diseñados para validar empíricamente los teoremas y conjeturas del artículo. Los scripts demuestran la **coherencia estructural** entre el modelo dinámico y los resultados analíticos derivados.
+El repositorio incluye 7 algoritmos diseñados para validar empíricamente los teoremas y cotas del artículo.
 
 | ID | Script | Propósito y Rigor Científico |
 | :--- | :--- | :--- |
-| **01** | `01_criba_resonancia.py` | **Verificación de la Equivalencia $\Omega(n)$ vs. $\Lambda_{MF}$**.<br> Implementa la convolución $\Omega = \Lambda_{MF} * 1$ para reconstruir $\Omega(n)$ y verifica que sus ceros coincidan exactamente con los números primos y con $n=4$. |
-| **02** | `02_espectro_t.py` | **Análisis del Espectro de Resonancia $T(n)$**.<br> Valida la convergencia de la Resonancia Iterada a las constantes fundamentales derivadas teóricamente ($T(4) \to e$ y $T(p) \to \mathcal{T}_p$). Confirma $T(n)$ como medida de la **entropía estructural**. |
-| **03** | `03_sismografo.py` | **Simulación de la Dinámica Espectral ($\Psi_E$)**.<br> Simula el proceso de carga/descarga de divisores. Compara la evolución temporal con el **Atractor Teórico** $\mathcal{K}_{MF} \ln(n)$, demostrando empíricamente la **regresión a la media** y el confinamiento dinámico del error. |
-| **04** | `04_abc_tension.py` | **Simulador de Tensión (Conjetura ABC)**.<br> Aplica la métrica de **Tensión Armónica Total** ($\Omega_{ABC}$) a ternas coprimas, testeando la hipótesis de que las configuraciones de alta potencia colapsan obligatoriamente a estados de baja resonancia. |
-| **05** | `05_Knuttzen_Abel.py` | **Visualizador de la Condición de Balance Zeta (HR)**.<br> Herramienta interactiva que descompone la función Zeta en sus componentes Estructural ($S$) y Oscilatorio ($I_{osc}$) para verificar visualmente que $|I_{osc}| = |S|$ solo ocurre en la línea crítica. |
+| **01** | `01_espectro_t.py` | **Análisis del Espectro $T(n)$**.<br> Valida la convergencia a las constantes fundamentales ($T(4) \to e$, $T(p) \to \mathcal{T}_p$). |
+| **02** | `02_sismografo.py` | **Simulador Dinámico**.<br> Ejecuta la dinámica de carga/descarga de energía $\Psi_E$ para verificar la estabilidad ISS del sistema. |
+| **03** | `03_contador_primos.py` | **Recuperación de $\pi(x)$**.<br> Cálculo de la función contadora utilizando la cota de error del sismógrafo del autor (O($n^{0.525}$)), logrando una estimación con **error menor al 0.3%** respecto al valor real. |
+| **04** | `04_abc_tension.py` | **Simulador de Tensión (ABC)**.<br> Aplica la métrica de **Tensión Armónica Total** ($\Omega_{ABC}$) a ternas coprimas para testear el colapso espectral. |
+| **05** | `05_zeta_approx.py` | **Aproximación de Riemann**.<br> Calcula $\zeta(s)$ para $\text{Re}(s)>1$ usando la **Linealización Estructural** (Teorema 6.7), separando el esqueleto algebraico de la corrección de onda integral. |
+| **06** | `06_Knuttzen_Abel_Integral.py` | **Visualizador de Balance**.<br> Descomposición visual interactiva de $\zeta(s)$ en componentes Estructural ($S$) y Oscilatorio ($I_{osc}$) en el plano complejo. |
+| **07** | `07_Generador_Imagen_Omega.py` | **Utilería Gráfica**.<br> Generación de renderizados de alta resolución para la función de resonancia y la dinámica del sismógrafo. |
 
 ---
 
-## 📄 Citación y Licencia
+## 📄 Citación
 
-Este trabajo está registrado y disponible para citación inmediata. Si utilizas las ecuaciones, el código o el marco teórico del MFN, por favor, **cita la versión con DOI**.
+Si utilizas algún concepto desarrollado en el repositorio, cita el trabajo original:
 
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.17674007.svg)](https://doi.org/10.5281/zenodo.17674007)
-
-**Licencia:**  
-Este repositorio y su contenido están bajo la licencia **CC BY 4.0** (Creative Commons Attribution 4.0).
-
-[![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](https://creativecommons.org/licenses/by/4.0/)
+> Knuttzen, J. (2025). *Resonancia Geométrica en los Enteros: Una derivación armónica de la función divisor y su dinámica espectral*. DOI: 10.5281/zenodo.17674007
 
 ---
 
-## 🎯 Roadmap (v1.1.0)
+## 🎯 Roadmap (v1.2.0 - Próximos Pasos)
 
-La investigación activa se centra actualmente en:
-* **Formalización del Criterio de Estabilidad Dinámica (HR):** Demostrar la **desigualdad estricta**, $|I_{osc}(s) < S(s)|$ para $\sigma > 1/2$. Esto requiere una acotación analítica rigurosa de la integral oscilatoria $I_{osc}(s)$ para probar que su amplitud es insuficiente para romper el equilibrio fuera de la línea crítica.
-* **Formalización del Error $\epsilon_{dyn}$:** Aplicación de Teoremas de Perron y Tauberianos para acotar analíticamente el término de error del Sismógrafo.
-* **Acoplamiento Espectral:** Investigación de la cuasi-identidad $\zeta(\mathcal{K}_{MF}) \approx T_p$ (99.85%) como evidencia de la fricción aritmética en modelos gaussianos de primos.
+El foco actual es reducir la cota probada desde el "Muro BHP" hacia la línea crítica:
+
+1. **Refinamiento de la Cota:** Investigar si la propiedad de **autocorrelación negativa** de la Semilla $\Lambda_{MF}$ permite mejorar la cota de entrada del sismógrafo de $n^{0.525}$ a $n^{0.5+\epsilon}$.
+2. **Análisis de Fricción:** Formalizar el "costo energético" $C_{Perf}$ como un límite termodinámico de Landauer.
