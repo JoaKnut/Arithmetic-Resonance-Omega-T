@@ -3,3 +3,4 @@ matplotlib
 scipy
 PyQt5
 PySide2
+mpmath
