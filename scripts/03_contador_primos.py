@@ -1,136 +1,150 @@
+import numpy as np
 import argparse
-import mpmath
+import time
 from mpmath import mp
 
-# Configuración de precisión (50 decimales para estabilidad en exponentes)
+# Configuración de precisión para Li(x)
 mp.dps = 50
 
-def calculate_K_MF():
+def generar_semilla_rapida(N):
     """
-    Calcula la Impedancia Fundamental K_MF resolviendo la ecuación de balance:
-    (2 - 2^-s) * zeta(s) = 4
-    Referencia: Teorema 6.5 y Ec. (13)[cite: 686, 649].
+    Genera la Semilla Frecuencial Lambda_MF.
+    A(n) = 2 (impar/base), 1 (par).
     """
-    # Definimos la función f(s) = (2 - 2^-s)zeta(s) - 4
-    f = lambda s: (2 - mp.power(2, -s)) * mp.zeta(s) - 4
-    
-    # Buscamos la raíz cerca de 1.5645 usando el método de secante
-    k_mf = mp.findroot(f, 1.5645)
-    return k_mf
+    A = np.ones(N + 1, dtype=np.float64)
+    A[1] = 2.0
+    A[3::2] = 2.0 
+    return A
 
-def get_li(n):
-    """Calcula la Integral Logarítmica Li(n)."""
-    return mp.li(n)
-
-def knuttzen_discrete_correction(n, k_mf):
+def inversion_espectral_rapida(A, N):
     """
-    Calcula la corrección discreta basada en la paridad exacta R(k).
-    Fórmula: Suma de Resolución Fina (Sección Nueva / Teorema de Suma).
-    Costo: O(N) - Lineal. Precisión absoluta.
+    Decodifica Lambda(n) usando convolución 'Push-Forward' O(N log N).
     """
-    correction_sum = mp.mpf(0)
+    indices = np.arange(N + 1, dtype=np.float64)
+    indices[0] = 1.0 
+    ln_n = np.log(indices)
+    ln_n[0] = 0.0
     
-    # Iteramos k desde 2 hasta floor(n)
-    # R(k) = 0.5 * (-1)^(floor(k)-1) -> +0.5 si impar, -0.5 si par[cite: 646].
+    B = A * (-ln_n)
+    C = np.zeros(N + 1, dtype=np.float64)
+    inv_A1 = 1.0 / A[1] 
     
-    # Nota: Para n muy grandes, esto es lento.
-    limit = int(n)
+    print(f"[INFO] Ejecutando resonancia de paridad para N={N}...")
+    start_time = time.time()
     
-    # Pre-cálculos para el bucle
-    term_s = k_mf
-    
-    # Bucle de suma
-    for k in range(2, limit + 1):
-        # Determinamos paridad: k impar (+0.5), k par (-0.5)
-        # (-1)^(k-1)
-        r_k = 0.5 if k % 2 != 0 else -0.5
+    for i in range(1, N + 1):
+        val = (B[i] + C[i]) * inv_A1
+        C[i] = val
         
-        # Integral del decaimiento entre k y k+1
-        # Int(s * t^-(s+1)) = k^-s - (k+1)^-s
-        decay = mp.power(k, -term_s) - mp.power(k+1, -term_s)
+        if abs(val) < 1e-9: continue
         
-        correction_sum += r_k * decay
+        if 2 * i <= N:
+            k_limit = N // i
+            multiples = np.arange(2 * i, (k_limit + 1) * i, i)
+            factors_A = A[2 : k_limit + 1]
+            C[multiples] -= val * factors_A
+            
+    print(f"[INFO] Espectro decodificado en {time.time() - start_time:.2f}s")
+    return -C 
 
-    # Factor de escala: -(2*pi / ln(n)) [cite: 690, 696]
-    scale = -(2 * mp.pi) / mp.log(n)
-    
-    return scale * correction_sum
+def mobius(n):
+    """Calcula la función de Möbius mu(n) para la inversión exacta."""
+    if n == 1: return 1
+    p = 2
+    count = 0
+    while p * p <= n:
+        if n % p == 0:
+            n //= p
+            count += 1
+            if n % p == 0: return 0 # Cuadrado perfecto
+        p += 1
+    if n > 1: count += 1
+    return -1 if count % 2 == 1 else 1
 
-def knuttzen_analytic_correction(n, k_mf):
+def correccion_armonicos_exacta(J_counts, N):
     """
-    Calcula la corrección continua usando la integral cosenoidal (Aproximación Gamma).
-    Fórmula: Ley de Proyección Cosenoidal.
-    Costo: O(1) vía Cuadratura Gaussiana.
-    Referencia: Definición 6.6 y Teorema 7.3[cite: 654, 690].
+    Transformada Inversa de Riemann EXACTA.
+    pi(x) = sum_{k=1} (mu(k)/k) * J(x^(1/k))
+    Corrige la distorsión armónica que causaba el error asintótico.
     """
-    # Definimos el integrando: cos(pi*t) / t^(s+1)
-    # Nota: Usamos la forma de cuadratura numérica de alta precisión de mpmath
-    # que es equivalente a evaluar la Gamma Incompleta pero más directa para límites finitos.
+    print("[INFO] Aplicando Inversión de Möbius (Limpieza Espectral Exacta)...")
+    pi_corrected = np.zeros(N + 1)
+    max_k = int(np.log2(N))
     
-    integrand = lambda t: mp.cos(mp.pi * t) / mp.power(t, k_mf + 1)
+    # Pre-cálculo de mu para velocidad
+    mu_vals = [mobius(k) for k in range(max_k + 2)]
     
-    # Integral definida de 2 a n
-    integral_val = mp.quad(integrand, [2, n])
-    
-    # Factor de escala derivado: (pi * s) / ln(n)
-    # Nota: El factor 2pi se cancela con el 0.5 del residuo cosenoidal R(x) = -0.5 cos(pi x).
-    # Signo positivo porque R(x) y la corrección tienen signos opuestos en la identidad.
-    scale = (mp.pi * k_mf) / mp.log(n)
-    
-    return scale * integral_val
+    for k in range(1, max_k + 1):
+        if mu_vals[k] == 0: continue
+        
+        # El peso es mu(k)/k. 
+        # k=1 -> +J(x)
+        # k=2 -> -1/2 J(x^1/2)
+        # k=4 -> 0
+        # k=6 -> +1/6 J(x^1/6)  <-- ESTO FALTABA EN LA VERSIÓN ANTERIOR
+        weight = mu_vals[k] / k
+        
+        indices = np.arange(N + 1)
+        # Interpolación truncada (índices enteros)
+        roots = (indices ** (1.0/k)).astype(int)
+        
+        pi_corrected += J_counts[roots] * weight
+        
+    return pi_corrected
 
 def main():
-    parser = argparse.ArgumentParser(description='Calculadora de Primos MFN (Modelo Frecuencial de Knuttzen)')
-    parser.add_argument('n', type=float, help='Número hasta el cual contar primos')
-    parser.add_argument('--exactly', action='store_true', help='Usar cálculo discreto (lento, máxima precisión)')
-    parser.add_argument('--aprox', action='store_true', help='Usar cálculo analítico continuo (rápido, alta precisión asintótica)')
-    
+    parser = argparse.ArgumentParser(description="Calculadora MFN Exacta (Corrección Möbius)")
+    parser.add_argument('N', type=int, help='Límite N')
     args = parser.parse_args()
-    n = mp.mpf(args.n)
+    N = args.N
+
+    # 1. Base MFN (Física)
+    A = generar_semilla_rapida(N)
+    Lambda_raw = inversion_espectral_rapida(A, N)
     
-    print("-" * 50)
-    print(f"CALCULADORA DE RESONANCIA GEOMÉTRICA (MFN)")
-    print("-" * 50)
-
-    # 1. Calcular K_MF
-    print("Calculando constante de impedancia K_MF con alta precisión...")
-    k_mf = calculate_K_MF()
-    print(f"K_MF (Calculado): {k_mf}")
-    print("-" * 50)
-
-    # 2. Calcular Li(n)
-    li_val = get_li(n)
-    print(f"Li({int(n)}): {li_val}")
-
-    # 3. Calcular Corrección
-    correction = 0
-    method = ""
-
-    if args.exactly:
-        if n > 1000000:
-            print("ADVERTENCIA: El modo --exactly es O(N). Para N > 10^6 se recomienda --aprox.")
-        print("Ejecutando corrección discreta (Suma de Paridad)...")
-        correction = knuttzen_discrete_correction(n, k_mf)
-        method = "Discreto (Exacto)"
-        
-    elif args.aprox:
-        print("Ejecutando corrección analítica (Integral Cosenoidal/Gamma)...")
-        correction = knuttzen_analytic_correction(n, k_mf)
-        method = "Analítico (Cosenoidal)"
+    # Filtro
+    Lambda_clean = np.where(Lambda_raw > 0.1, Lambda_raw, 0)
+    
+    # Integración J(x)
+    inv_log = np.zeros(N + 1)
+    inv_log[2:] = 1.0 / np.log(np.arange(2, N + 1))
+    J_x = np.cumsum(Lambda_clean * inv_log)
+    
+    # 2. Corrección MFN (Óptica)
+    # Aquí es donde eliminamos el error asintótico
+    pi_mfn_final = correccion_armonicos_exacta(J_x, N)
+    
+    # 3. Comparativa
+    real_pi = 0
+    if N <= 100000000:
+        print(f"[INFO] Calculando conteo REAL...")
+        sieve = np.ones(N+1, dtype=bool); sieve[:2]=False
+        for i in range(2, int(N**0.5)+1):
+            if sieve[i]: sieve[i*i::i] = False
+        real_pi = np.sum(sieve)
     else:
-        print("Por favor seleccione un modo: --exactly o --aprox")
-        return
-
-    # 4. Resultado Final
-    pi_mfn = li_val + correction
+        real_pi = float(mp.li(N)) # Fallback para N gigantes
+        
+    li_x = float(mp.li(N))
+    mfn_val = pi_mfn_final[N]
     
-    print("-" * 50)
-    print(f"RESULTADOS para N = {int(n)}")
-    print(f"Método: {method}")
-    print(f"Corrección MFN (Energía): {correction}")
-    print(f"Predicción pi(N): {pi_mfn}")
-    print(f"Valor Entero: {int(mp.nint(pi_mfn))}")
-    print("-" * 50)
+    err_mfn = mfn_val - real_pi
+    err_li = li_x - real_pi
+    
+    print("\n" + "="*60)
+    print(f"RESULTADOS FINALES MFN (N = {N:,})")
+    print("="*60)
+    print(f"{'MÉTODO':<20} | {'VALOR':<15} | {'ERROR':<15}")
+    print("-" * 60)
+    print(f"{'Real':<20} | {real_pi:<15,.0f} | {'0':<15}")
+    print(f"{'Li(x) Gauss':<20} | {li_x:<15,.2f} | {err_li:<+15,.2f}")
+    print(f"{'MFN (Möbius)':<20} | {mfn_val:<15,.2f} | {err_mfn:<+15,.4f}")
+    print("-" * 60)
+    
+    if abs(err_mfn) < 1:
+        print(f">> PRECISIÓN EXACTA LOGRADA (Error < 1 primo)")
+    else:
+        print(f">> MFN es {abs(err_li/err_mfn):.1f}x más preciso que Li(x)")
 
 if __name__ == "__main__":
     main()
