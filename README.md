@@ -16,7 +16,6 @@ En la versión **v1.2.0**, el proyecto alcanza un hito crítico: la **Resolució
 
 | Concepto | Identidad / Cota | Interpretación Física del Modelo |
 | :--- | :--- | :--- |
-| **Ley de Proyección Cosenoidal** | $\pi_{MFN}(x) \approx Li(x) + \frac{\pi \mathcal{K}_{MF}}{\ln x} \int \frac{\cos(\pi t)}{t^{\mathcal{K}+1}} dt$ | **Resolución Asintótica**. La ubicación de los primos a gran escala es una onda suave determinista. Permite cálculo $O(1)$ mediante Gamma Incompleta. |
 | **Inversión Espectral de Möbius** | $\pi(x) = \sum_{k=1}^{\lfloor \log_2 x \rfloor} \frac{\mu(k)}{k} J_{MFN}(x^{1/k})$ | **Resolución Aritmética Exacta**. Reconstrucción determinista del conteo de primos mediante el filtrado de armónicos del potencial resonante $J_{MFN}$, eliminando la necesidad de términos de error probabilísticos. || **Impedancia $\mathcal{K}_{MF}$** | $\mathcal{K}_{MF} \approx 1.564498...$ | Constante fundamental de amortiguamiento del sistema, raíz de la ecuación de balance espectral de la semilla $\Lambda_{MF}$. |
 | **Identidad de Acople** | $\epsilon_{dyn}(n) \sim -\frac{1}{2\pi} \ln(n) (\pi(n) - Li(n))$ | Vinculación mecánica directa entre el error del sismógrafo y el error en el conteo de primos. |
 
