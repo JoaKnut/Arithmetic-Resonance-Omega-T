@@ -1,7 +1,7 @@
 # 🔱 Modelo Frecuencial de los Números (MFN) | v1.3.0
 
 [![Status](https://img.shields.io/badge/Status-Resoluci%C3%B3n%20Anal%C3%ADtica%20Determinista-blue)](https://github.com/Knuttzen/MFN)
-[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18124255.svg)](https://doi.org/10.5281/zenodo.18124255)
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18149244.svg)](https://doi.org/10.5281/zenodo.18149244)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](LICENSE)
 
 ---
@@ -52,7 +52,7 @@ El repositorio incluye 8 algoritmos diseñados para validar empíricamente la ri
 
 Si utilizas algún concepto desarrollado en el repositorio, cita el trabajo original:
 
-> Knuttzen, J. (2025). *Resonancia Geométrica en los Enteros: Una derivación armónica de la función divisor y su dinámica espectral*. DOI: 10.5281/zenodo.18124255
+> Knuttzen, J. (2025). *Resonancia Geométrica en los Enteros: Una derivación armónica de la función divisor y su dinámica espectral*. DOI: 10.5281/zenodo.18149244
 
 ---
 
