@@ -1,6 +1,5 @@
 # 🔱 Modelo Frecuencial de los Números (MFN) | v1.3.0
 
-<<<<<<< HEAD
 [![Status](https://img.shields.io/badge/Status-Resoluci%C3%B3n%20Anal%C3%ADtica%20Determinista-blue)](https://github.com/Knuttzen/MFN)
 =======
 [![Status](https://img.shields.io/badge/Status-Desmitificaci%C3%B3n%20Aritm%C3%A9tica%20Total-gold)](https://github.com/Knuttzen/MFN)
