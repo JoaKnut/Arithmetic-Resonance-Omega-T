@@ -1,9 +1,7 @@
 # 🔱 Modelo Frecuencial de los Números (MFN) | v1.3.0
 
 [![Status](https://img.shields.io/badge/Status-Resoluci%C3%B3n%20Anal%C3%ADtica%20Determinista-blue)](https://github.com/Knuttzen/MFN)
-=======
 [![Status](https://img.shields.io/badge/Status-Desmitificaci%C3%B3n%20Aritm%C3%A9tica%20Total-gold)](https://github.com/Knuttzen/MFN)
->>>>>>> ca44989 (v1.3.0. Determinismo de la primalidad)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18124255.svg)](https://doi.org/10.5281/zenodo.18124255)
 [![License: CC BY 4.0](https://img.shields.io/badge/License-CC%20BY%204.0-lightgrey.svg)](LICENSE)
 
@@ -19,14 +17,11 @@ Se demuestra que los números primos y perfectos no son entidades estocásticas,
 
 | Concepto | Identidad / Cota | Significado Ontológico |
 | :--- | :--- | :--- |
-<<<<<<< HEAD
 | **Inversión Espectral de Möbius** | $\pi(x) = \sum_{k=1}^{\lfloor \log_2 x \rfloor} \frac{\mu(k)}{k} J_{MFN}(x^{1/k})$ | **Resolución Aritmética Exacta**. Reconstrucción determinista del conteo de primos mediante el filtrado de armónicos del potencial resonante $J_{MFN}$, eliminando la necesidad de términos de error probabilísticos. || **Impedancia $\mathcal{K}_{MF}$** | $\mathcal{K}_{MF} \approx 1.564498...$ | Constante fundamental de amortiguamiento del sistema, raíz de la ecuación de balance espectral de la semilla $\Lambda_{MF}$. |
 | **Identidad de Acople** | $\epsilon_{dyn}(n) \sim -\frac{1}{2\pi} \ln(n) (\pi(n) - Li(n))$ | Vinculación mecánica directa entre el error del sismógrafo y el error en el conteo de primos. |
-=======
 | **Génesis de la Semilla** | $\Lambda_{MF} * \alpha = \alpha \cdot \ln$ | La información de la primalidad nace de la paridad ($\alpha$). Los primos son consecuencias deterministas de la estructura binaria. |
 | **Resolución de $\pi(x)$** | $\pi(x) = \sum \frac{\mu(k)}{k} J_{MFN}(x^{1/k})$ | **Determinismo Total**. El conteo de primos se sintetiza desde la semilla, eliminando el azar del modelo de Cramér. |
 | **Filtro de Mersenne** | $P(x) = \sum \delta_{\epsilon}(\Lambda_{MF}(M_p) - \ln M_p)$ | **Resolución de la Perfección**. Función contadora exacta para números perfectos basada en resonancia de fase, no en búsqueda de divisores. |
->>>>>>> ca44989 (v1.3.0. Determinismo de la primalidad)
 
 ---
 
@@ -36,7 +31,6 @@ El repositorio incluye 8 algoritmos diseñados para validar empíricamente la ri
 
 | ID | Script | Propósito y Rigor Científico |
 | :--- | :--- | :--- |
-<<<<<<< HEAD
 | **01** | `01_espectro_t.py` | **Análisis del Espectro $T(n)$**.<br> Valida la convergencia a las constantes fundamentales ($T(4) \to e$, $T(p) \to \mathcal{T}_p$). |
 | **02** | `02_sismografo.py` | **Simulador Dinámico**.<br> Ejecuta la dinámica de carga/descarga de energía $\Psi_E$ para verificar la estabilidad ISS del sistema. |
 | **03** | `03_contador_primos.py` | **Calculadora Espectral Unificada**.<br> Implementa las fórmulas analíticas deterministas (v1.2.0). Permite calcular $\pi(x)$ con precisión arbitraria mediante modos discretos. |
@@ -44,7 +38,6 @@ El repositorio incluye 8 algoritmos diseñados para validar empíricamente la ri
 | **05** | `05_zeta_approx.py` | **Aproximación de Riemann**.<br> Calcula $\zeta(s)$ para $\text{Re}(s)>1$ usando la **Linealización Estructural** (Teorema 6.7), separando el esqueleto algebraico de la corrección de onda integral. |
 | **06** | `06_Knuttzen_Abel_Integral.py` | **Visualizador de Balance**.<br> Descomposición visual interactiva de $\zeta(s)$ en componentes Estructural ($S$) y Oscilatorio ($I_{osc}$) en el plano complejo. |
 | **07** | `07_Generador_Imagen_Omega.py` | **Utilería Gráfica**.<br> Generación de renderizados de alta resolución para la función de resonancia y la dinámica del sismógrafo. |
-=======
 | **01** | `01_espectro_t.py` | **Análisis del Espectro $T(n)$**.<br> Valida la convergencia a constantes fundamentales ($T(4) \to e$, $T(p) \to \mathcal{T}_p$). |
 | **02** | `02_sismografo.py` | **Simulador Dinámico**.<br> Verifica la estabilidad ISS del sistema de carga/descarga de energía $\Psi_E$. |
 | **03** | `03_contador_primos.py` | **Calculadora Espectral Unificada**.<br> Implementa el conteo exacto de $\pi(x)$ mediante la inversión de Möbius de la semilla. |
@@ -53,7 +46,6 @@ El repositorio incluye 8 algoritmos diseñados para validar empíricamente la ri
 | **06** | `06_zeta_approx.py` | **Aproximación de Riemann**.<br> Separa el esqueleto algebraico de $\zeta(s)$ de su corrección de onda integral. |
 | **07** | `07_Knuttzen_Abel_Integral.py` | **Visualizador de Balance**.<br> Descomposición interactiva de $\zeta(s)$ en componentes $S$ e $I_{osc}$. |
 | **08** | `08_Generador_Imagen_Omega.py` | **Utilería Gráfica**.<br> Renderizados de la función de resonancia y la dinámica del sismógrafo. |
->>>>>>> ca44989 (v1.3.0. Determinismo de la primalidad)
 
 ---
 
