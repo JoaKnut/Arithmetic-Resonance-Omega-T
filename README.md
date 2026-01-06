@@ -1,4 +1,4 @@
-# 🔱 Modelo Frecuencial de los Números (MFN) | v1.3.0
+# 🔱 Modelo Frecuencial de los Números (MFN) | v1.3.1
 
 [![Status](https://img.shields.io/badge/Status-Resoluci%C3%B3n%20Anal%C3%ADtica%20Determinista-blue)](https://github.com/Knuttzen/MFN)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18149244.svg)](https://doi.org/10.5281/zenodo.18149244)
@@ -8,11 +8,11 @@
 
 ## 🧭 Overview del Proyecto
 
-El **Modelo Frecuencial de los Números (MFN)** es un marco teórico que establece un **isomorfismo analítico** entre la geometría de las subdivisiones de polígonos regulares y la teoría de divisores. En la versión **v1.3.0**, el modelo trasciende la descripción asintótica para alcanzar la **Génesis de la Paridad**. 
+El **Modelo Frecuencial de los Números (MFN)** es un marco teórico que establece un **isomorfismo analítico** entre la geometría de las subdivisiones de polígonos regulares y la teoría de divisores. En la versión **v1.3.1**, el modelo trasciende la descripción asintótica para alcanzar la **Génesis de la Paridad**. 
 
 Se demuestra que los números primos y perfectos no son entidades estocásticas, sino "nudos espectrales" necesarios e inevitables resultantes de la vibración de la paridad sobre la recta numérica.
 
-### 🔑 Hitos de la Desmitificación (v1.3.0)
+### 🔑 Hitos de la Desmitificación (v1.3.1)
 
 | Concepto | Identidad / Cota | Significado Ontológico |
 | :--- | :--- | :--- |
@@ -30,16 +30,9 @@ El repositorio incluye 8 algoritmos diseñados para validar empíricamente la ri
 
 | ID | Script | Propósito y Rigor Científico |
 | :--- | :--- | :--- |
-| **01** | `01_espectro_t.py` | **Análisis del Espectro $T(n)$**.<br> Valida la convergencia a las constantes fundamentales ($T(4) \to e$, $T(p) \to \mathcal{T}_p$). |
-| **02** | `02_sismografo.py` | **Simulador Dinámico**.<br> Ejecuta la dinámica de carga/descarga de energía $\Psi_E$ para verificar la estabilidad ISS del sistema. |
-| **03** | `03_contador_primos.py` | **Calculadora Espectral Unificada**.<br> Implementa las fórmulas analíticas deterministas (v1.2.0). Permite calcular $\pi(x)$ con precisión arbitraria mediante modos discretos. |
-| **04** | `04_abc_tension.py` | **Simulador de Tensión (ABC)**.<br> Aplica la métrica de **Tensión Armónica Total** ($\Omega_{ABC}$) a ternas coprimas para testear el colapso espectral. |
-| **05** | `05_zeta_approx.py` | **Aproximación de Riemann**.<br> Calcula $\zeta(s)$ para $\text{Re}(s)>1$ usando la **Linealización Estructural** (Teorema 6.7), separando el esqueleto algebraico de la corrección de onda integral. |
-| **06** | `06_Knuttzen_Abel_Integral.py` | **Visualizador de Balance**.<br> Descomposición visual interactiva de $\zeta(s)$ en componentes Estructural ($S$) y Oscilatorio ($I_{osc}$) en el plano complejo. |
-| **07** | `07_Generador_Imagen_Omega.py` | **Utilería Gráfica**.<br> Generación de renderizados de alta resolución para la función de resonancia y la dinámica del sismógrafo. |
 | **01** | `01_espectro_t.py` | **Análisis del Espectro $T(n)$**.<br> Valida la convergencia a constantes fundamentales ($T(4) \to e$, $T(p) \to \mathcal{T}_p$). |
 | **02** | `02_sismografo.py` | **Simulador Dinámico**.<br> Verifica la estabilidad ISS del sistema de carga/descarga de energía $\Psi_E$. |
-| **03** | `03_contador_primos.py` | **Calculadora Espectral Unificada**.<br> Implementa el conteo exacto de $\pi(x)$ mediante la inversión de Möbius de la semilla. |
+| **03** | `03_contador_primos.py` | **Calculadora Espectral Unificada**.<br> Implementa el conteo exacto con `--exactly` de $\pi(x)$ mediante la inversión de Möbius de la semilla. Para n grande, se recomienda utilizar la linearización `--aprox`. |
 | **04** | `04_contador_perfectos.py` | **Detector de Resonancia de Mersenne**.<br> Calcula $P(x)$ detectando "ecos" de paridad en índices de Mersenne. |
 | **05** | `05_abc_tension.py` | **Simulador de Tensión (ABC)**.<br> Testea el colapso espectral en la suma de estructuras ricas. |
 | **06** | `06_zeta_approx.py` | **Aproximación de Riemann**.<br> Separa el esqueleto algebraico de $\zeta(s)$ de su corrección de onda integral. |
