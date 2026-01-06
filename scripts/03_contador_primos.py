@@ -3,12 +3,12 @@ import argparse
 import time
 from mpmath import mp
 
-# Configuración de precisión para Li(x)
+# Configuración de precisión para cálculos trascendentes
 mp.dps = 50
 
 def generar_semilla_rapida(N):
     """
-    Genera la Semilla Frecuencial Lambda_MF.
+    [EXACTO] Genera la señal base de paridad alpha(n).
     A(n) = 2 (impar/base), 1 (par).
     """
     A = np.ones(N + 1, dtype=np.float64)
@@ -18,7 +18,9 @@ def generar_semilla_rapida(N):
 
 def inversion_espectral_rapida(A, N):
     """
-    Decodifica Lambda(n) usando convolución 'Push-Forward' O(N log N).
+    [EXACTO] Decodifica Lambda(n) usando convolución recursiva.
+    Resuelve: (Lambda * alpha)(n) = alpha(n) ln n
+    Complejidad: O(N log N)
     """
     indices = np.arange(N + 1, dtype=np.float64)
     indices[0] = 1.0 
@@ -29,13 +31,14 @@ def inversion_espectral_rapida(A, N):
     C = np.zeros(N + 1, dtype=np.float64)
     inv_A1 = 1.0 / A[1] 
     
-    print(f"[INFO] Ejecutando resonancia de paridad para N={N}...")
+    print(f"[INFO] Ejecutando Sismógrafo de Paridad (Convolución) para N={N}...")
     start_time = time.time()
     
     for i in range(1, N + 1):
         val = (B[i] + C[i]) * inv_A1
         C[i] = val
         
+        # Propagación de la señal a múltiplos (Criba aditiva)
         if abs(val) < 1e-9: continue
         
         if 2 * i <= N:
@@ -48,103 +51,130 @@ def inversion_espectral_rapida(A, N):
     return -C 
 
 def mobius(n):
-    """Calcula la función de Möbius mu(n) para la inversión exacta."""
+    """Calcula mu(n) para limpieza de armónicos."""
     if n == 1: return 1
     p = 2
     count = 0
-    while p * p <= n:
-        if n % p == 0:
-            n //= p
+    temp = n
+    while p * p <= temp:
+        if temp % p == 0:
+            temp //= p
             count += 1
-            if n % p == 0: return 0 # Cuadrado perfecto
+            if temp % p == 0: return 0 # Cuadrado perfecto
         p += 1
-    if n > 1: count += 1
+    if temp > 1: count += 1
     return -1 if count % 2 == 1 else 1
 
 def correccion_armonicos_exacta(J_counts, N):
     """
-    Transformada Inversa de Riemann EXACTA.
-    pi(x) = sum_{k=1} (mu(k)/k) * J(x^(1/k))
-    Corrige la distorsión armónica que causaba el error asintótico.
+    [EXACTO] Inversión de Möbius sobre el potencial discreto J calculado.
+    Recupera pi(x) limpiando los ecos p^k de la señal J_MFN.
     """
-    print("[INFO] Aplicando Inversión de Möbius (Limpieza Espectral Exacta)...")
+    print("[INFO] Aplicando Inversión de Möbius (Limpieza Espectral)...")
     pi_corrected = np.zeros(N + 1)
     max_k = int(np.log2(N))
     
-    # Pre-cálculo de mu para velocidad
     mu_vals = [mobius(k) for k in range(max_k + 2)]
     
     for k in range(1, max_k + 1):
         if mu_vals[k] == 0: continue
         
-        # El peso es mu(k)/k. 
-        # k=1 -> +J(x)
-        # k=2 -> -1/2 J(x^1/2)
-        # k=4 -> 0
-        # k=6 -> +1/6 J(x^1/6)  <-- ESTO FALTABA EN LA VERSIÓN ANTERIOR
         weight = mu_vals[k] / k
-        
         indices = np.arange(N + 1)
-        # Interpolación truncada (índices enteros)
         roots = (indices ** (1.0/k)).astype(int)
-        
         pi_corrected += J_counts[roots] * weight
         
     return pi_corrected
 
-def main():
-    parser = argparse.ArgumentParser(description="Calculadora MFN Exacta (Corrección Möbius)")
-    parser.add_argument('N', type=int, help='Límite N')
-    args = parser.parse_args()
-    N = args.N
+def calculo_aproximado_mfn(N):
+    """
+    [APROX] Implementación de la Linearización Esquelética MFN.
+    Fórmula: pi(x) ~ Sum_{k=1}^{log2 x} (mu(k)/k) * Li(x^(1/k))
+    
+    Esta función asume que el potencial J_MFN sigue perfectamente al atractor
+    logarítmico (J ~ Li), ignorando la oscilación local de paridad.
+    Complejidad: O(log N) - Instantáneo.
+    """
+    print(f"[INFO] Ejecutando Linearización MFN (Esqueleto Logarítmico)...")
+    start = time.time()
+    
+    total = mp.mpf(0)
+    limit_k = int(np.log2(N))
+    
+    for k in range(1, limit_k + 1):
+        m_k = mobius(k)
+        if m_k == 0: continue
+        
+        # Núcleo de la aproximación: Li(N^(1/k))
+        # Se podría agregar aquí el término de inercia (1 - Tp/t) si se desea mayor precisión en rangos bajos.
+        root = mp.power(N, 1.0/k)
+        term = mp.li(root)
+        
+        total += (m_k / k) * term
+        
+    print(f"[INFO] Cálculo completado en {time.time() - start:.6f}s")
+    return float(total)
 
-    # 1. Base MFN (Física)
-    A = generar_semilla_rapida(N)
-    Lambda_raw = inversion_espectral_rapida(A, N)
-    
-    # Filtro
-    Lambda_clean = np.where(Lambda_raw > 0.1, Lambda_raw, 0)
-    
-    # Integración J(x)
-    inv_log = np.zeros(N + 1)
-    inv_log[2:] = 1.0 / np.log(np.arange(2, N + 1))
-    J_x = np.cumsum(Lambda_clean * inv_log)
-    
-    # 2. Corrección MFN (Óptica)
-    # Aquí es donde eliminamos el error asintótico
-    pi_mfn_final = correccion_armonicos_exacta(J_x, N)
-    
-    # 3. Comparativa
-    real_pi = 0
-    if N <= 100000000:
-        print(f"[INFO] Calculando conteo REAL...")
+def get_real_pi(N):
+    """Obtiene el valor real de pi(x) para referencia."""
+    if N <= 100_000_000:
+        print(f"[REF] Cribando para obtener pi(x) real exacto...")
         sieve = np.ones(N+1, dtype=bool); sieve[:2]=False
         for i in range(2, int(N**0.5)+1):
             if sieve[i]: sieve[i*i::i] = False
-        real_pi = np.sum(sieve)
+        return np.sum(sieve)
     else:
-        real_pi = float(mp.li(N)) # Fallback para N gigantes
+        print(f"[REF] N muy grande, usando Li(x) como proxy de 'Real' (referencia teórica)...")
+        return float(mp.li(N))
+
+def main():
+    parser = argparse.ArgumentParser(description="Calculadora MFN: Determinismo de Paridad vs Ingeniería Espectral")
+    parser.add_argument('N', type=int, help='Límite superior N')
+    parser.add_argument('--exactly', action='store_true', help='Calcula pi(x) desde cero usando convolución de paridad (Lento, demuestra ontología)')
+    parser.add_argument('--aprox', action='store_true', help='Calcula pi(x) usando la fórmula linearizada MFN (Rápido, ingeniería)')
+    
+    args = parser.parse_args()
+    N = args.N
+    
+    if not (args.exactly or args.aprox):
+        print("Error: Debes especificar un modo: --exactly (Teoría) o --aprox (Ingeniería).")
+        return
+
+    # Referencia
+    real_pi = get_real_pi(N)
+    results = {}
+
+    # --- MODO EXACTO (Knuttzen Ontológico) ---
+    if args.exactly:
+        A = generar_semilla_rapida(N)
+        Lambda_raw = inversion_espectral_rapida(A, N)
+        Lambda_clean = np.where(Lambda_raw > 0.1, Lambda_raw, 0) # Filtro de ruido numérico
         
-    li_x = float(mp.li(N))
-    mfn_val = pi_mfn_final[N]
+        # Integración J(x)
+        inv_log = np.zeros(N + 1)
+        inv_log[2:] = 1.0 / np.log(np.arange(2, N + 1))
+        J_x = np.cumsum(Lambda_clean * inv_log)
+        
+        pi_exact_arr = correccion_armonicos_exacta(J_x, N)
+        results['Exacto (Paridad)'] = pi_exact_arr[N]
+
+    # --- MODO APROXIMADO (Ingeniería MFN) ---
+    if args.aprox:
+        val_aprox = calculo_aproximado_mfn(N)
+        results['Aprox (Linear)'] = val_aprox
+
+    # Reporte
+    print("\n" + "="*70)
+    print(f"RESULTADOS FINALES (N = {N:,})")
+    print("="*70)
+    print(f"{'MÉTODO':<25} | {'VALOR':<18} | {'DIFERENCIA':<15}")
+    print("-" * 70)
+    print(f"{'Real (Referencia)':<25} | {real_pi:<18,.0f} | {'0':<15}")
     
-    err_mfn = mfn_val - real_pi
-    err_li = li_x - real_pi
-    
-    print("\n" + "="*60)
-    print(f"RESULTADOS FINALES MFN (N = {N:,})")
-    print("="*60)
-    print(f"{'MÉTODO':<20} | {'VALOR':<15} | {'ERROR':<15}")
-    print("-" * 60)
-    print(f"{'Real':<20} | {real_pi:<15,.0f} | {'0':<15}")
-    print(f"{'Li(x) Gauss':<20} | {li_x:<15,.2f} | {err_li:<+15,.2f}")
-    print(f"{'MFN (Möbius)':<20} | {mfn_val:<15,.2f} | {err_mfn:<+15,.4f}")
-    print("-" * 60)
-    
-    if abs(err_mfn) < 1:
-        print(f">> PRECISIÓN EXACTA LOGRADA (Error < 1 primo)")
-    else:
-        print(f">> MFN es {abs(err_li/err_mfn):.1f}x más preciso que Li(x)")
+    for method, val in results.items():
+        diff = val - real_pi
+        print(f"{method:<25} | {val:<18,.2f} | {diff:<+15,.4f}")
+    print("-" * 70)
 
 if __name__ == "__main__":
     main()
