@@ -725,62 +725,6 @@ We add 4 to both sides (leaving $+2$ on the right side) and divide everything by
 \caption{Visualization of the decomposition. Most of the value of the Zeta function comes from simple powers of 2 (blue curve). Complexity resides solely in the thin integral layer of residue $R(x)$.}
 \end{figure}
 
-\subsection{Spectral Universality: The Arithmetic Translation Table}
-
-The derivation of the seed identity suggests that $\Lambda_{MF}$ is not an isolated artifact, but a fundamental wave carrier upon which all multiplicative functions are modulated.
-
-To systematize these relationships, we define three base operators acting on the complex variable $s$. These components simplify notation and isolate the physical mechanisms of resonance.
-
-\begin{definition}[Spectral Nucleus Components]
-\label{def:componentes}
-\begin{enumerate}
-    \item \textbf{Algebraic Skeleton ($\mathcal{S}_{alg}$):} The deterministic structure of powers.
-    \[ \mathcal{S}_{alg}(s) := 2 + \frac{3}{2^{s+1}}\left(\frac{s+1}{s-1}\right) \]
-    
-    \item \textbf{Exact Residue ($\mathcal{I}_{R}$):} The integral containing parity information.
-    \[ \mathcal{I}_{R}(s) := s \int_{2}^{\infty} \frac{R(x)}{x^{s+1}} \, dx \]
-    
-    \item \textbf{Binary Impedance ($\mathcal{Z}_{bin}$):} The scale factor induced by duplication.
-    \[ \mathcal{Z}_{bin}(s) := 2 - 2^{-s} \]
-\end{enumerate}
-\end{definition}
-
-Based on this, Theorem \ref{thm:linealizacion} establishes that $\zeta(s) = (\mathcal{S}_{alg} + \mathcal{I}_{R}) / \mathcal{Z}_{bin}$. We generalize this result by presenting the **Master Translation Table**, where classic arithmetic functions emerge from the interaction between these three components.
-
-\begin{theorem}[Unified Spectral Identities]
-Fundamental number theory functions admit the following exact representations in terms of the Frequency Seed:
-
-\begin{enumerate}
-    \item \textbf{Dirichlet Eta Function ($\eta(s)$):}
-    Converges for $\operatorname{Re}(s)>0$ due to impedance damping.
-    \[ \eta(s) = \left( \frac{1 - 2^{1-s}}{\mathcal{Z}_{bin}(s)} \right) \left[ \mathcal{S}_{alg}(s) + \mathcal{I}_{R}(s) \right] \]
-
-    \item \textbf{Möbius Function (Inverse $\zeta(s)^{-1}$):}
-    The distribution of square-free integers inverts the structure-impedance relationship.
-    \[ \sum_{n=1}^{\infty}\frac{\mu(n)}{n^s} = \frac{\mathcal{Z}_{bin}(s)}{\mathcal{S}_{alg}(s) + \mathcal{I}_{R}(s)} \]
-    \textit{Note: Non-trivial Riemann zeros correspond to destructive interference solutions $\mathcal{S}_{alg}(s) = -\mathcal{I}_{R}(s)$.}
-
-    \item \textbf{Liouville Function ($\lambda(n)$):}
-    Represents octave interference between the fundamental frequency $s$ and its harmonic $2s$.
-    \[ \sum_{n=1}^{\infty}\frac{\lambda(n)}{n^s} = \frac{\mathcal{Z}_{bin}(s)}{\mathcal{Z}_{bin}(2s)} \cdot \frac{\mathcal{S}_{alg}(2s) + \mathcal{I}_{R}(2s)}{\mathcal{S}_{alg}(s) + \mathcal{I}_{R}(s)} \]
-
-    \item \textbf{Euler's Totient Function ($\phi(n)$):}
-    Introduces a temporal phase shift ($s \to s-1$) in the nucleus structure.
-    \[ \sum_{n=1}^{\infty}\frac{\phi(n)}{n^s} = \frac{\mathcal{Z}_{bin}(s)}{\mathcal{Z}_{bin}(s-1)} \cdot \frac{\mathcal{S}_{alg}(s-1) + \mathcal{I}_{R}(s-1)}{\mathcal{S}_{alg}(s) + \mathcal{I}_{R}(s)} \]
-    
-    \item \textbf{Von Mangoldt Function ($\Lambda(n)$):}
-    The logarithmic derivative reveals that the ``quantum'' of prime information is $\ln 2$, modulated by the internal nucleus dynamics.
-    \[ \sum_{n=1}^{\infty} \frac{\Lambda(n)}{n^s} = \underbrace{\frac{\ln 2 \cdot 2^{-s}}{\mathcal{Z}_{bin}(s)}}_{\text{Binary Tension}} - \underbrace{\frac{\mathcal{S}'_{alg}(s) + \mathcal{I}'_{R}(s)}{\mathcal{S}_{alg}(s) + \mathcal{I}_{R}(s)}}_{\text{Nucleus Dynamics}} \]
-\end{enumerate}
-\end{theorem}
-
-\begin{remark}[From Discrete Rigor to Gamma Approximation]
-The above identities are \emph{exact} as long as the term $\mathcal{I}_{R}(s)$ is maintained with the step function $R(x)$. However, for computational purposes, it is valid to apply the trigonometric regularization $R(x) \approx -0.5\cos(\pi x)$.
-This transforms the integral residue into a closed expression based on the Incomplete Gamma Function:
-\[ \mathcal{I}_{R}(s) \xrightarrow{\text{Smoothing}} -\frac{s \pi^s}{4} \left[ (-i)^{-s}\Gamma(-s, 2\pi i) + i^{-s}\Gamma(-s, -2\pi i) \right] \]
-This substitution demonstrates that the apparent complexity of functions like $\mu(n)$ or $\Lambda(n)$ is, by 95\%, a deterministic algebraic structure ($\mathcal{S}_{alg}$), with stochastic uncertainty confined to the integral ``skin.''
-\end{remark}
-
 % ------------------------------------------------------------
 % SECTION 6
 % ------------------------------------------------------------
@@ -1186,16 +1130,6 @@ Substituting into the total radical:
 Inverting the relation, we recover the classical inequality.
 \end{proof}
 
-\newpage
-
-% ============================================================
-% === PART III: APPLICATIONS =================================
-% ============================================================
-\part{Spectral Information Theory}
-\begin{center}
-    \small\textit{In this final section, we apply the frequency model to security engineering. We utilize the topological invariants defined in Part I to establish a new paradigm of cryptographic classification.}
-\end{center}
-
 % ------------------------------------------------------------
 % SECTION 10
 % ------------------------------------------------------------
@@ -1258,37 +1192,180 @@ RSA encryption modules ($N=p \cdot q$) inhabit a unique ``stability plateau'' wi
 Class $\mathcal{C}_4$ is neither too simple (like primes, easy to detect) nor too complex (like rich composites, which collapse fast). They maintain just enough structural rigidity to allow message recovery, but sufficient statistics to appear as random noise to an external observer.
 \end{remark}
 
-% -------------------------------------------------------------------------
+\newpage
+
+% ============================================================
+% === PART III: SPECTRAL ENGINEERING AND COMPUTATION =========
+% ============================================================
+\newpage
+\part{Spectral Engineering and Numerical Computation}
+\begin{center}
+    \small\textit{In this final section, the ontological principles of the frequency model are translated into calculation tools. We formally define the operational components of the spectral kernel, derive an efficient linearization for the prime counting function, and discuss the thermodynamic implications of a deterministic arithmetic.}
+\end{center}
+
+% ------------------------------------------------------------
 % SECTION 11
-% -------------------------------------------------------------------------
+% ------------------------------------------------------------
+\section{Spectral Universality and Kernel Components}
 
-\section{Discussion and Paths Forward}
+To systematize the application of the Frequency Model (MFN), it is necessary to decompose the complexity of the Zeta function into standardized building blocks. Unlike the classical approach, which treats $\zeta(s)$ as a monolithic object, the MFN interprets it as a signal composed of a carrier structure, a scale impedance, and parity noise.
 
-The Frequency Model of Numbers (MFN) has established a rigorous bridge between the geometric intuition of polygonal subdivision and the analytic complexity of the Zeta function. What emerges from this study is not merely a collection of arithmetic identities, but a coherent ontology where integers possess an internal vibrational structure governed by deterministic laws.
+We resume and formally define the \textbf{Spectral Tripod}, the three operators whose interaction generates the entirety of multiplicative functions.
 
-By demonstrating that $\pi(x)$ and $P(x)$ are exact transforms of the Parity Seed $\Lambda_{MF}$, we have demystified the apparent chaos of the prime distribution. Primes are not random anomalies; they are the inevitable "spectral knots" required to solve the convolution equation of parity.
+\subsection{Definition of Operational Components}
 
-\subsection*{The Informational Dimension}
-A central finding is that resonance properties constitute a natural topology of information. By defining the \textbf{Structural Gradient} ($\nabla$) as a physical invariant, we suggest that integers act as topological containers capable of storing structural (class) and magnitude (intensity) information causally.
-
-\subsection*{Roadmap for Future Research}
-
-To consolidate this theory and transition from heuristic validation to complete formalization, we propose the following priority research lines:
+\begin{definition}[Spectral Kernel Components]
+\label{def:kernel_components}
+We isolate the physical behaviors of the system into three functions independent of the complex variable $s$:
 
 \begin{enumerate}
-    \item \textbf{Computational Complexity of the Seed:} 
-    While equation (18) is deterministic, its calculation involves a Dirichlet convolution. Future work must analyze the complexity class of calculating $\Lambda_{MF}(n)$. Is it possible to optimize the recursion to verify primality in polynomial time ($P$), or is the "spectral unfolding" inherently irreducible?
+    \item \textbf{Algebraic Skeleton ($\mathcal{S}_{alg}$):} Represents the deterministic magnitude of the system. It is the smooth "carrier wave" that dictates the asymptotic trend, free from local oscillations.
+    \begin{equation}
+        \mathcal{S}_{alg}(s) := 2 + \frac{3}{2^{s+1}}\left(\frac{s+1}{s-1}\right)
+    \end{equation}
     
-    \item \textbf{Thermodynamic Proof of Conjecture 8.3:} 
-    The definition of the Perfect Damping Constant $C_{Perf}$ offers a route to formally prove the non-existence of Odd Perfect Numbers. Research should focus on demonstrating that the structural entropy $\nabla(N)$ of any odd candidate exceeds the energy budget available in the system ($T(N)-1 > C_{Perf}$), rendering its existence thermodynamically impossible.
+    \item \textbf{Binary Impedance ($\mathcal{Z}_{bin}$):} The resistance factor induced by the duplication operation ($n \to 2n$). It acts as a filter that dampens the signal as frequency increases.
+    \begin{equation}
+        \mathcal{Z}_{bin}(s) := 2 - 2^{-s}
+    \end{equation}
+    
+    \item \textbf{Oscillatory Residue ($\mathcal{I}_{osc}$):} The integral component containing local parity information (the "skin" of the system). It captures the fine discrepancy between the continuous model and discrete reality.
+    \begin{equation}
+        \mathcal{I}_{osc}(s) := s \int_{2}^{\infty} \frac{R(x)}{x^{s+1}} \, dx
+    \end{equation}
+    Where $R(x) = \frac{1}{2}(-1)^{\lfloor x \rfloor - 1}$ is the parity error function.
+\end{enumerate}
+\end{definition}
 
-    \item \textbf{Riemann Zeros as Phase Locks:} 
-    With the explicit link between $\Lambda_{MF}$ and $\zeta(s)$, the Riemann Hypothesis can be reinterpreted. The non-trivial zeros should be studied not as random values, but as the precise phase-locking frequencies required to stabilize the Parity Seed against the "Binary Impedance" $\mathcal{Z}_{bin}(s)$.
+\subsection{Arithmetic Translation Table}
 
-    \item \textbf{Parity Cryptography:} 
-    The reversibility of the seed suggests new cryptographic protocols. Can a message be encoded into the parity structure of a large number such that decoding requires knowledge of the spectral tension (factorization), but verification is instantaneous via resonance resonance?
+Under this architecture, classical arithmetic functions are not disjoint entities but specific configurations of this spectral circuit.
+
+\begin{theorem}[Unified Spectral Identities]
+The fundamental functions admit the following exact representations in terms of the Spectral Tripod:
+
+\begin{table}[H]
+\centering
+\renewcommand{\arraystretch}{2.4}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}lll@{}}
+\toprule
+\textbf{Function ($\mathcal{F}$)} & \textbf{Dirichlet Series} $\sum \mathcal{F}(n)n^{-s}$ & \textbf{Spectral Configuration (MFN)} \\ \midrule
+Zeta ($\zeta$) & $\displaystyle \sum n^{-s}$ & $\displaystyle \frac{\mathcal{S}_{alg}(s) + \mathcal{I}_{osc}(s)}{\mathcal{Z}_{bin}(s)}$ \\
+Möbius ($\mu$) & $\displaystyle \sum \mu(n)n^{-s}$ & $\displaystyle \frac{\mathcal{Z}_{bin}(s)}{\mathcal{S}_{alg}(s) + \mathcal{I}_{osc}(s)}$ \\
+Totient ($\phi$) & $\displaystyle \sum \phi(n)n^{-s}$ & $\displaystyle \frac{\mathcal{Z}_{bin}(s)}{\mathcal{Z}_{bin}(s-1)} \cdot \frac{\mathcal{S}_{alg}(s-1) + \mathcal{I}_{osc}(s-1)}{\mathcal{S}_{alg}(s) + \mathcal{I}_{osc}(s)}$ \\
+Liouville ($\lambda$) & $\displaystyle \sum \lambda(n)n^{-s}$ & $\displaystyle \frac{\mathcal{Z}_{bin}(s)}{\mathcal{Z}_{bin}(2s)} \cdot \frac{\mathcal{S}_{alg}(2s) + \mathcal{I}_{osc}(2s)}{\mathcal{S}_{alg}(s) + \mathcal{I}_{osc}(s)}$ \\
+Von Mangoldt ($\Lambda$) & $\displaystyle \sum \Lambda(n)n^{-s}$ & $\displaystyle \frac{\ln 2 \cdot 2^{-s}}{\mathcal{Z}_{bin}(s)} - \frac{\mathcal{S}'_{alg}(s) + \mathcal{I}'_{osc}(s)}{\mathcal{S}_{alg}(s) + \mathcal{I}_{osc}(s)}$ \\ \bottomrule
+\end{tabular}%
+}
+\caption{Translation dictionary. Note that $\mu(n)$ emerges as the inverse of the structure (admittance), while $\phi(n)$ is a temporal phase shift of the same kernel.}
+\end{table}
+\end{theorem}
+
+This table makes explicit that the apparent complexity of the distribution of square-free integers ($\mu$) or primes ($\Lambda$) stems solely from the $\mathcal{I}_{osc}$ term. The rest is predictable algebraic structure.
+
+\subsection{Computational Regularization}
+
+For high-efficiency numerical engineering, the exact evaluation of the integral $\mathcal{I}_{osc}$ is costly due to the discontinuities of $R(x)$. However, in the asymptotic limit, macroscopic information resides in the energy envelope. Approximating the square wave with its fundamental trigonometric component $R(x) \approx -0.5\cos(\pi x)$, we obtain a regularized closed form:
+
+\begin{equation}
+    \tilde{\mathcal{I}}_{osc}(s) \approx -\frac{s \pi^s}{4} \left[ (-i)^{-s}\Gamma(-s, 2\pi i) + i^{-s}\Gamma(-s, -2\pi i) \right]
+\end{equation}
+
+This regularization acts as a low-pass filter, eliminating high-frequency noise (bit-wise parity) and allowing for asymptotic density estimates with constant computational cost $O(1)$.
+
+% ------------------------------------------------------------
+% SECTION 12
+% ------------------------------------------------------------
+\section{Linearization of $\pi(x)$ and Connection with Riemann}
+
+The central goal of spectral engineering is the efficient reconstruction of the prime counting function $\pi(x)$ via a constructive process, avoiding destructive sieves.
+
+\subsection{From the Inertia Integral to Skeletal Approximation}
+
+In the Frequency Model, the density of primes is not simply $1/\ln t$. The system possesses an inertial "mass" $\mathcal{T}_p$ (the Gaussian constant derived in Theorem 4.2) that resists prime formation at low scales.
+We define the \textbf{Originating Integral} for a harmonic $y = x^{1/k}$ as:
+
+\begin{equation}
+    \mathcal{J}(y) = \int_{2}^{y} \frac{1}{\ln t} \left( 1 - \frac{\mathcal{T}_p}{t} \right) \, dt
+\end{equation}
+
+Decomposing this integral, we obtain two competing components:
+\begin{align*}
+    \mathcal{J}(y) &= \int_{2}^{y} \frac{dt}{\ln t} - \mathcal{T}_p \int_{2}^{y} \frac{dt}{t \ln t} \\
+    &= \left[ \operatorname{Li}(y) \right]_2^y - \mathcal{T}_p \left[ \ln(\ln t) \right]_2^y \\
+    &\approx \operatorname{Li}(y) - \mathcal{T}_p \ln(\ln y)
+\end{align*}
+
+For astronomical magnitudes ($y \to \infty$), the linear term $\operatorname{Li}(y) \sim \frac{y}{\ln y}$ completely dominates the double logarithmic correction $\ln(\ln y)$. This allows us to simplify the model by retaining only the main "skeleton" for the Möbius summation.
+
+\begin{definition}[MFN Linearization]
+The practical approximation for the prime counting function is defined as the Möbius inversion of the skeletal potential:
+\begin{equation}
+    \boxed{ \tilde{\pi}_{MF}(x) = \sum_{k=1}^{\lfloor \log_2 x \rfloor} \frac{\mu(k)}{k} \operatorname{Li}(x^{1/k}) }
+\end{equation}
+\end{definition}
+
+\subsection{Ontological Justification and Convergence}
+
+It is crucial to note that this expression formally converges to Riemann's approximation $R(x)$. However, the ontology—the causal origin—is radically different:
+\begin{itemize}
+    \item \textbf{Riemann's Approach:} The formula arises from Complex Analysis by considering the "principal part" of the Zeta function and ignoring the oscillatory terms of non-trivial zeros. It is an approximation by omission.
+    \item \textbf{Frequency Approach (MFN):} The formula arises from \textbf{Parity Dynamics}. Zeros are not ignored; it is demonstrated that parity oscillation $\alpha(n)$ generates a potential whose equilibrium structure is logarithmic. The Möbius series $\sum \frac{\mu(k)}{k}$ is not an ad-hoc adjustment, but the necessary mechanical mechanism to clean the resonant echoes ($p^2, p^3$) generated by multiplicative structure.
+\end{itemize}
+
+\textbf{Physical Bound:} The sum is truncated at $k = \lfloor \log_2 x \rfloor$ because for $k > \log_2 x$, the argument $x^{1/k} < 2$. Physically, this represents the limit where the resonance signal falls below the information threshold (the first prime), extinguishing itself.
+
+\subsection{Accuracy Comparison}
+
+The following table demonstrates that the MFN-derived approximation matches the accuracy of the best analytical standards, validating that parity contains all the information necessary to describe the asymptotic distribution.
+
+\begin{table}[H]
+\centering
+\caption{Numerical Duel: MFN vs. Classical Standards}
+\label{tab:comparativa_pi}
+\begin{tabular}{@{}lcccc@{}}
+\toprule
+\textbf{Magnitude ($x$)} & \textbf{$\pi(x)$ Real} & \textbf{Gauss ($\operatorname{Li}(x)$)} & \textbf{Riemann ($R(x)$)} & \textbf{MFN ($\tilde{\pi}_{MF}$)} \\ \midrule
+$10^6$ & 78,498 & 78,628 (+130) & 78,527 (+29) & \textbf{78,527 (+29)} \\
+$10^9$ & 50,847,534 & 50,849,235 (+1701) & 50,847,455 (-79) & \textbf{50,847,455 (-79)} \\
+$10^{12}$ & 37,607,912,018 & (+36,268) & (-1,476) & \textbf{(-1,476)} \\ \bottomrule
+\end{tabular}
+\end{table}
+
+% ------------------------------------------------------------
+% SECTION 13
+% ------------------------------------------------------------
+\section{Pathways for Advancement and Conclusions}
+
+The Frequency Model of Numbers (MFN) closes the loop between geometric intuition and computational engineering. What began as an inquiry into tessellations has revealed a deterministic structure underlying the fabric of integers.
+
+\subsection{Discussion: A Paradigm Shift}
+
+Historically, the distribution of prime numbers has been interpreted under the shadow of randomness. Models like Cramér's suggest that primes behave "as if" they were die rolls. The MFN challenges this view by proposing a \textbf{Resonance Mechanics}:
+
+\begin{itemize}
+    \item \textbf{Determinism vs. Chance:} Prime numbers are not stochastic anomalies; they are the \textbf{stability nodes} required for the arithmetic system to dissipate the entropy generated by the addition operation. They are the main beams supporting the edifice of parity.
+    \item \textbf{The Illusion of Chaos:} What we perceive as noise in the distribution of primes is, in reality, a signal of extremely high complexity generated by the interference of parity waves. Much like in a Fourier transform, temporal chaos becomes spectral order.
+\end{itemize}
+
+\subsection{Roadmap for Future Research}
+
+The formalization of this framework opens promising avenues for mathematical physics and cryptography:
+
+\begin{enumerate}
+    \item \textbf{Thermodynamics of Arithmetic Information:}
+    If the function $T(n)$ measures stability, then arithmetic possesses an intrinsic thermodynamics. Investigating whether the "resonant cost" of creating structures (such as hypothetical odd perfect numbers) obeys entropic limits analogous to Landauer's Principle could offer a physical proof for existence problems.
+
+    \item \textbf{Spectral Cryptography:}
+    The identification of the "Stability Plateau" ($\nabla=4$) for semiprimes suggests that RSA security lies not only in factorization difficulty but in perfect topological camouflage. Developing algorithms that "listen" to the $T(n)$ resonance could allow auditing cryptographic keys by detecting structural weaknesses invisible to conventional primality tests.
+
+    \item \textbf{Inertia Refinement:}
+    The originating integral $\mathcal{J}(y)$ includes the inertial term $\mathcal{T}_p \ln(\ln y)$. Future implementations should reincorporate this term into the Möbius sum to correct systematic error in low ranges, potentially surpassing the precision of the classical Gram series.
 \end{enumerate}
 
-In conclusion, the geometric-harmonic approach offers a renewing perspective: the number line is a deterministic string vibrating with parity, and prime numbers are the fundamental harmonics of this cosmic music.
+\subsection{Conclusion}
+
+This work proposes that the number line is not a passive space, but an active dynamic system governed by principles of resonance. By adopting this spectral perspective, we have transformed problems of arithmetic uncertainty into problems of deterministic signal processing. This vision not only offers new tools for efficient calculation but suggests a profound and elegant unity between geometry, physics, and number theory.
 
 \end{document}
